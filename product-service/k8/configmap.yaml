@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-service
+data:
+  application.yml: |-
+    server:
+      port: 9090
+      error:        
+        include-message: always
+        include-binding-errors: always
+        forward-headers-strategy: framework
+    spring:
+      h2:
+        console:
+          enable: true
+      datasource:
+        url: jdbc:h2:mem:productDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        driverClassName: org.h2.Driver
+        platform: h2
+        username: sa
+        password:
+        initialization-mode: always
+      jpa:
+        defer-datasource-initialization: true
+        show-sql: true
+        hibernate:
+          ddl-auto: update
+        database-platform: org.hibernate.dialect.H2Dialect
+        properties:
+          hibernate:
+            format_sql: false
+            show_sql: true
+            use_sql_comments: false
+    logging:
+      pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-5%p} %m%n"
+      level:
+        org:
+          hibernate:
+            SQL: DEBUG
+            type: TRACE
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+    springdoc:
+      api-docs:
+        path: /products/openapi
+      swagger-ui:
+        path: /products/swagger

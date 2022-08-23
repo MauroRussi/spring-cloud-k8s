@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service-deployment
+  labels:
+    app: product-service-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service-label
+  template:
+    metadata:
+      labels:
+        app: product-service-label
+    spec:
+      containers:
+        - name: product-service-container
+          image: localhost:5000/product-service
+          ports:
+            - containerPort: 9090
+      serviceAccountName: spring-cloud-demo-sa
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service-service
+  labels:
+    app: product-service-label
+spec:
+  ports:
+    - port: 9090
+      targetPort: 9090
+      protocol: TCP
+      name: http
+  selector:
+    app: product-service-label
+  type: NodePort

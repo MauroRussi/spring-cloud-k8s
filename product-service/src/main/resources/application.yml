@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    kubernetes:
+      config:
+        name: product-service
+        enableApi: true
