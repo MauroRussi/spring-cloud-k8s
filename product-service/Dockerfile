@@ -1,6 +1,5 @@
 # Recommended installation of OpenJDK
 FROM eclipse-temurin:17_35-jdk-alpine
-MAINTAINER mrussi
 
 # Add useful tools
 RUN apk update						# update the local registry

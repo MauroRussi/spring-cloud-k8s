@@ -43,8 +43,12 @@ data:
     management:
       endpoints:
         web:
+          base-path: /products/actuator
           exposure:
             include: "*"
+      metrics:
+        enable:
+          all: true
     springdoc:
       api-docs:
         path: /products/openapi

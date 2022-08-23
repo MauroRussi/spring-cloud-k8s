@@ -5,6 +5,7 @@ import co.com.home.labs.springboot.store.product.entity.Product;
 import co.com.home.labs.springboot.store.product.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class ProductController {
     private ProductService productService ;
 
     @GetMapping
+    @Timed(value = "product.listProduct.time", description = "Time taken to return products")
     public ResponseEntity<List<Product>> listProduct(@RequestParam(name = "categoryId", required = false) Long categoryId){
         List<Product> products = new ArrayList<>();
         if (null ==  categoryId){
@@ -47,6 +49,7 @@ public class ProductController {
 
 
     @GetMapping(value = "/{id}")
+    @Timed(value = "product.getProduct.time", description = "Time taken to return a single product")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
         Product product =  productService.getProduct(id);
         if (null==product){

@@ -46,3 +46,12 @@ logging:
       hibernate:
         SQL: DEBUG
         type: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    enable:
+      all: true

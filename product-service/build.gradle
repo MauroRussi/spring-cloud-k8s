@@ -16,15 +16,19 @@ ext {
 	set('springCloudVersion', "2021.0.3")
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+dependencies {	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all'
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+
+	// Dependencies to enable actuator, micrometer and custom timers to publish for prometheus
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
+
 	compileOnly 'org.projectlombok:lombok'
 	//runtimeOnly 'com.h2database:h2'
 	//This is a workaround to support SpringBoot 2.7.0
