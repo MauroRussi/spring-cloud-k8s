@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service-deployment
+  labels:
+    app: customer-service-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-service-label
+  template:
+    metadata:
+      labels:
+        app: customer-service-label
+    spec:
+      containers:
+        - name: customer-service-container
+          image: localhost:5000/customer-service
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: 300Mi
+            limits:
+              cpu: "1.0"
+              memory: 300Mi
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /customers/actuator/health
+            initialDelaySeconds: 60
+            timeoutSeconds: 2
+            periodSeconds: 20
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /customers/actuator/info
+            initialDelaySeconds: 60
+            timeoutSeconds: 2
+            periodSeconds: 20
+            failureThreshold: 5
+      serviceAccountName: spring-cloud-demo-sa
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service-service
+  labels:
+    app: customer-service-label
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: customer-service-label
+  type: NodePort

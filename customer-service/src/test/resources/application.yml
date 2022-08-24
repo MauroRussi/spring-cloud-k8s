@@ -1,0 +1,48 @@
+# Application Configuration for Test profile
+server:
+  port: 8080
+  error:
+    # Since SpringBoot 2.3 message response is hidden to avoid leaking sensitive information
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  cloud:
+    config:
+# Disable Spring Config to avoid errors during loading
+      enabled: false
+    discovery:
+# Disable Spring Discovery to avoid errors during loading
+      enabled: false
+
+  # ===============================
+  # DB
+  # ===============================
+  datasource:
+    url: jdbc:h2:mem:productDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    platform: h2
+    username: sa
+    password:
+    initialization-mode: always
+
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: true
+        use_sql_comments: false
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-5%p} %m%n"
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
