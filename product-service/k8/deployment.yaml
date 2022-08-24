@@ -18,7 +18,7 @@ spec:
         - name: product-service-container
           image: localhost:5000/product-service
           ports:
-            - containerPort: 9090
+            - containerPort: 8080
           resources:
             requests:
               cpu: "0.2"
@@ -28,7 +28,7 @@ spec:
               memory: 300Mi
           readinessProbe:
             httpGet:
-              port: 9090
+              port: 8080
               path: /products/actuator/health
             initialDelaySeconds: 60
             timeoutSeconds: 2
@@ -36,7 +36,7 @@ spec:
             failureThreshold: 5
           livenessProbe:
             httpGet:
-              port: 9090
+              port: 8080
               path: /products/actuator/info
             initialDelaySeconds: 60
             timeoutSeconds: 2
@@ -52,8 +52,8 @@ metadata:
     app: product-service-label
 spec:
   ports:
-    - port: 9090
-      targetPort: 9090
+    - port: 8080
+      targetPort: 8080
       protocol: TCP
       name: http
   selector:
