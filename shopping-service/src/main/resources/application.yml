@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: shopping-service
+  cloud:
+    kubernetes:
+      config:
+        name: shopping-service
+        enableApi: true
