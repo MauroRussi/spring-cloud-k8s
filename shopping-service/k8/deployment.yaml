@@ -35,4 +35,4 @@ spec:
       name: http
   selector:
     app: shopping-service-label
-  type: NodePort
+  type: ClusterIP
