@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-cloud-demo-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: springclouddemo.com
+      http:
+        paths:
+          - path: /customers
+            pathType: Prefix
+            backend:
+              service:
+                name: customer-service-service
+                port:
+                  number: 8080
+          - path: /products
+            pathType: Prefix
+            backend:
+              service:
+                name: product-service-service
+                port:
+                  number: 8080
+          - path: /invoices
+            pathType: Prefix
+            backend:
+              service:
+                name: shopping-service-service
+                port:
+                  number: 8080
