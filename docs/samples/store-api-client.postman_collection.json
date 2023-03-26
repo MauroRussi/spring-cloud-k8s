@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "7b743209-863d-4def-8584-5d3569aab4a4",
+		"name": "store-api-client",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20066007"
+	},
+	"item": [
+		{
+			"name": "config-service",
+			"item": [
+				{
+					"name": "customer-service config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{config_url}}/customer-service/default",
+							"host": [
+								"{{config_url}}"
+							],
+							"path": [
+								"customer-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registry-service config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{config_url}}/registry-service/default",
+							"host": [
+								"{{config_url}}"
+							],
+							"path": [
+								"registry-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product-service config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{config_url}}/product-service/default",
+							"host": [
+								"{{config_url}}"
+							],
+							"path": [
+								"product-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "shopping-service config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{config_url}}/shopping-service/default",
+							"host": [
+								"{{config_url}}"
+							],
+							"path": [
+								"shopping-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer-service",
+			"item": [
+				{
+					"name": "All customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/customers",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/customers/1",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Primer nombre\",\n    \"numberID\": \"A1234567\",\n    \"lastName\": \"Apellidos\",\n    \"email\": \"usuario1@gmail.com\",\n    \"photoUrl\": \"\",\n    \"region\": {\"id\": 2, \"name\": \"Centroamerica\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/customers",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product-service",
+			"item": [
+				{
+					"name": "All products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/products?categoryId=1",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/products/1",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product 1\",\n    \"description\": \"Description product 1\",\n    \"stock\": 0,\n    \"price\": 30,\n    \"category\": {\"id\": 1, \"name\": \"shoes\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/products/",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product updated\",\n    \"description\": \"Description product updated\",\n    \"stock\": 1,\n    \"price\": 30,\n    \"category\": {\"id\": 1, \"name\": \"shoes\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/products/4",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"products",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update stock product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/products/3/stock?quantity=-1.0",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"products",
+								"3",
+								"stock"
+							],
+							"query": [
+								{
+									"key": "quantity",
+									"value": "-1.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/products/4",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"products",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shopping-service",
+			"item": [
+				{
+					"name": "Create invoice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numberInvoice\": \"002\",\n    \"description\": \"Invoice store\",\n    \"customerId\": 2,\n    \"items\": [{\n        \"quantity\": 1,\n        \"price\": 178.89,\n        \"productId\": 1\n    },\n    {\n        \"quantity\": 2,\n        \"price\": 40.06,\n        \"productId\": 3\n    }]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/invoices/",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"invoices",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All invoices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/invoices/1",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "config_url",
+			"value": "http://root:secret@localhost:8081",
+			"type": "string"
+		},
+		{
+			"key": "gateway_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

@@ -14,51 +14,68 @@ The details and new features of this lab are:
  * The technology view of the architecture changed as follows:
    - It is needed to have a Kubernetes implementation. I recommend to use [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/).
    - It is needed to have an external Docker Images Registry supported by Minukube to load the images and allows K8s to get the images from there.
-   - Ths k8s folder has the kubertes configuration in general and for each project.
+   - Ths k8s folder has the kubernetes configuration in general and for each project.
+
+To run the project is needed to setup the following components
+
+1. Docker runtime (in macOS use Colima)
+   ```shell
+   brew install docker docker-compose colima
+   ```
+
+2. kubectl and minikube
+   ```shell
+   brew install kubectl minikube
+   ```
+
+3. Configure minikube
+   ```shell
+   minikube config set driver docker
+   minikube start
+   minikube status
+   
+   # List the installed and supported addons
+   minikube addons list
+
+   # Install the basic addons   
+   minikube addons enable metrics-server
+   minikube addons enable dashboard
+   minikube addons enable ingress
+   ```
+
+4. It is not possible to use minikube registry because it assigns a random port on each startup. I rather use github registry.
 
 The new deployment of this lab is the following:
 
 ### Configuration to run the project
+1. Start colima (container runtime in macOS) and check docker runtime
+   ```shell   
+   colima start
+   docker info
+   ```
+
 1. Start minikube:
    ```shell
-   minikube start --vm-driver=virtualbox
+   minikube start
    ```
 
-2. Load registry 
-   ```shell
-   kubectl port-forward --namespace kube-system service/registry 5000:80
-   curl http://localhost:5000/v2/_catalog
-   ```
-
-3. Create k8s namespace
+2. Create k8s namespace
    ```shell
    kubectl create namespace spring-cloud-demo
    ```
 
-4. Create a role to access K8s APIs
+3. Create the role, service account and role-binding to access K8s APIs
    ```shell
-   kubectl apply -f k8s/cluster-role.yaml -n default
+   kubectl apply -f k8s/services-role.yaml
    ```
 
-5. Create a service account
+4. Per service execute
    ```shell
-   kubectl create serviceaccount spring-cloud-demo-sa -n spring-cloud-demo
+   # Execute it only if the image does not exist in the dockerhub repository
+   make build
+   make deploy
    ```
 
-6. Bind service account to role
-   ```shell
-   kubectl create clusterrolebinding spring-cloud-demo-role-binding --clusterrole=spring-cloud-demo-role --serviceaccount=spring-cloud-demo:spring-cloud-demo-sa
-   ```
+ minikube tunnel to allow ingress on 127.0.0.1
 
-7. Create k8s config-maps
-   ```shell
-   kubectl create -f product-service/k8/configmap.yaml -n spring-cloud-demo
-   kubectl create -f product-service/k8/configmap.yaml -n spring-cloud-demo
-   kubectl create -f product-service/k8/configmap.yaml -n spring-cloud-demo
-   ```
-
- make build
- k delete pod product-service -n spring-cloud-demo
- k apply -f k8/configmap.yaml -n spring-cloud-demo
- k run product-service --image=localhost:5000/product-service --port=8080 -n spring-cloud-demo
- k logs product-service -n spring-cloud-demo -f
+ Registry runs on port 49165 instead of default port 5000

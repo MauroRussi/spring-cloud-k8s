@@ -1,0 +1,67 @@
+#%RAML 1.0
+title: OpenAPI definition
+version: v0
+annotationTypes:
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+/customers:
+  get:
+    displayName: listAllCustomers
+    responses:
+      '200':
+        description: OK
+    queryParameters:      
+      regionId:
+        required: false
+        schema:
+          type: integer
+          format: int64
+    (oas-tags):
+      - customer-rest
+  post:
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Customer'
+      required: true
+    displayName: createCustomer
+    responses:
+      '200':
+        description: OK
+    (oas-tags):
+      - customer-rest
+  '/{id}':
+    get:
+      displayName: getCustomer
+      responses:
+        '200':
+          description: OK
+      (oas-tags):
+        - customer-rest
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      displayName: updateCustomer
+      responses:
+        '200':
+          description: OK
+      (oas-tags):
+        - customer-rest
+    delete:
+      displayName: deleteCustomer
+      responses:
+        '200':
+          description: OK
+      (oas-tags):
+        - customer-rest
+    uriParameters:
+      id:
+        schema:
+          type: integer
+          format: int64

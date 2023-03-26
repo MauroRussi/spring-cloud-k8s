@@ -16,3 +16,14 @@ deploy_all: ## Deploy all projects to k8s cluster
 	$(MAKE) -C customer-service deploy
 	$(MAKE) -C shopping-service deploy
 	kubectl apply -f k8/ingress.yaml -n spring-cloud-demo
+
+build_all: ## Build all projects and load the images
+	$(MAKE) -C product-service build
+	$(MAKE) -C customer-service build
+	$(MAKE) -C shopping-service build
+	kubectl apply -f k8/ingress.yaml -n spring-cloud-demo
+
+load_images: ## Load the image of all projects in the Docker registry
+	$(MAKE) -C product-service load_image
+	$(MAKE) -C customer-service load_image
+	$(MAKE) -C shopping-service load_image

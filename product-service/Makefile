@@ -1,6 +1,6 @@
 ######### Variables definitions #########
 image_name = product-service:latest
-registry_url = localhost:5000
+registry_url = mrussi69
 namespace = spring-cloud-demo
 
 ######### Main tasks definition #########
@@ -10,18 +10,18 @@ namespace = spring-cloud-demo
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-build: clean check ## Build the project using gradle, build the image in docker, tag the image and upload it into a local registry
+build: clean check ## Build the project using gradle, build the image in docker, tag the image and upload it into the public registry
 	gradle build
 	docker build --tag=$(registry_url)/$(image_name) .
 	docker push $(registry_url)/$(image_name)
 
 undeploy: ## Removes the deployment and configmap from K8S cluster
-	kubectl delete -f k8/deployment.yaml -n $(namespace)
-	kubectl delete -f k8/configmap.yaml -n $(namespace)
+	kubectl delete -f k8s/deployment.yaml -n $(namespace)
+	kubectl delete -f k8s/configmap.yaml -n $(namespace)
 
-deploy: build ## Build and deploy the configmap and the application into K8S cluster
-	kubectl apply -f k8/configmap.yaml -n $(namespace)
-	kubectl apply -f k8/deployment.yaml -n $(namespace)
+deploy: ## Deploy the configmap and the application into K8S cluster	
+	kubectl apply -f k8s/configmap.yaml -n $(namespace)
+	kubectl apply -f k8s/deployment.yaml -n $(namespace)
 
 ######### Support tasks definition #########
 clean:
@@ -45,3 +45,6 @@ check:
 		$(error "This script uses kubectl and it isn't installed - please install it and try again!")
 		exit 1
     endif
+
+load_image:
+	docker push $(registry_url)/$(image_name)

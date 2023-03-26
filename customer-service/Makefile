@@ -45,3 +45,6 @@ check:
 		$(error "This script uses kubectl and it isn't installed - please install it and try again!")
 		exit 1
     endif
+
+load_image:
+	docker push $(registry_url)/$(image_name)
